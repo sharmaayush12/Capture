@@ -2,8 +2,13 @@ const express = require('express')
 var http = require('http');
 var fs = require('fs');
 var path = require('path')
+const cors=require('cors')
 
 const app = express()
+
+app.use(cors({
+    origin:'*'
+}))
 
 app.use(function (res, req, next) {
     res.header("Cross-Origin-Opener-Policy", "same-origin");
@@ -11,8 +16,10 @@ app.use(function (res, req, next) {
     next()
 })
 
-http.createServer(function(req,res){
-    res.writeHead(200,{"Content-Type":"text/html"});
+http.createServer(function(req,res){    
+    res.writeHead(200,{
+        "Content-Type":"text/html"
+    });
     fs.createReadStream(path.resolve(__dirname,"index.html"))
     .pipe(res)
 }).listen('3000');
