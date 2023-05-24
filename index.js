@@ -2,13 +2,13 @@ const express = require('express')
 var http = require('http');
 var fs = require('fs');
 var path = require('path')
-const cors=require('cors')
-const { createFFmpeg } = require('@ffmpeg/ffmpeg');
+const cors = require('cors')
+const { createFFmpeg, fetchFile } = require('@ffmpeg/ffmpeg');
 
 const app = express()
 
 app.use(cors({
-    origin:'*'
+    origin: '*'
 }))
 
 app.use(function (res, req, next) {
@@ -18,17 +18,33 @@ app.use(function (res, req, next) {
 })
 
 
-http.createServer(function(req,res){    
+app.use(express.static(path.resolve('./public')));
+// app.get('/', function (res, req) {
+//     http.createServer(function(req,res){    
 
-    res.writeHead(200,{
-        "Content-Type":"text/html"
-    });
-    fs.createReadStream(path.resolve(__dirname,"index2.html"))
-    .pipe(res)
-}).listen('3000');
+//         res.writeHead(200,{
+//             "Content-Type":"text/html"
+//         });
+//         fs.createReadStream(path.resolve(__dirname,"index.html"))
+//         .pipe(res)
+//     })
+// });
+
+
+app.get('/test', function (res, req) {
+    
+    const ffmpeg = createFFmpeg({ log: true });
+    (async () => {
+        await ffmpeg.load();
+        ffmpeg.FS('writeFile', 'test.webm', await fetchFile('./test.webm'));
+        await ffmpeg.run('-i', 'test.webm', 'test.mp4');
+        await fs.promises.writeFile('./test.mp4', ffmpeg.FS('readFile', 'test.mp4'));
+        process.exit(0);
+      })();
+});
 
 
 
-// app.listen(3000, () => {
-//     console.log("App is Listening on port 5000")
-// })
+app.listen(3000, () => {
+    console.log("App is Listening on port 3000")
+})

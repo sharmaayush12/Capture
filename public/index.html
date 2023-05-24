@@ -1,0 +1,53 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultimate Photobooth 📸</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="Style.css">
+  <script src="your-module.wasm" type="application/wasm"></script>
+
+  <script>
+    if (!crossOriginIsolated) 
+    SharedArrayBuffer = ArrayBuffer;
+  </script>
+
+<!-- <script type="text/javascript">
+  var apiUrl = 'http://localhost:3000/test';
+  fetch(apiUrl).then(response => {
+    return response.json();
+  }).then(data => {
+    // Work with JSON data here
+    console.log(data);
+  }).catch(err => {
+    console.log(err)
+    // Do something for an error here
+  });
+</script> -->
+</head>
+
+
+<body>
+  <video id="player" controls></video>
+  <input type="file" id="uploader">
+  <script src='https://unpkg.com/@ffmpeg/ffmpeg@0.9.3/dist/ffmpeg.min.js'></script>
+  <script>
+    const { createFFmpeg, fetchFile } = FFmpeg;
+    const ffmpeg = createFFmpeg({ log: true });
+    const transcode = async ({ target: { files } }) => {
+      const { name } = files[0];
+      await ffmpeg.load();
+      ffmpeg.FS('writeFile', name, await fetchFile(files[0]));
+      await ffmpeg.run('-i', name,  'output.mp4');
+      const data = ffmpeg.FS('readFile', 'output.mp4');
+      const video = document.getElementById('player');
+      video.src = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
+    }
+    document
+      .getElementById('uploader').addEventListener('change', transcode);
+  </script>
+</body>
+
+</html>
