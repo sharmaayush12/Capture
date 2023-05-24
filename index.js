@@ -3,6 +3,7 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path')
 const cors=require('cors')
+const { createFFmpeg } = require('@ffmpeg/ffmpeg');
 
 const app = express()
 
@@ -16,18 +17,18 @@ app.use(function (res, req, next) {
     next()
 })
 
+
 http.createServer(function(req,res){    
+
     res.writeHead(200,{
         "Content-Type":"text/html"
     });
-    fs.createReadStream(path.resolve(__dirname,"index.html"))
+    fs.createReadStream(path.resolve(__dirname,"index2.html"))
     .pipe(res)
 }).listen('3000');
 
-// app.get('/', (res, req) => {
-//     res.sendfile(__dirname + "/index.html")
-// })
 
-// app.listen(5000, () => {
+
+// app.listen(3000, () => {
 //     console.log("App is Listening on port 5000")
 // })
