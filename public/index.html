@@ -325,11 +325,11 @@
       })
         .then(response => response.text())
         .then(result => {
-          fetch('http://localhost:8080/file/test.mp4')
+          fetch('https://capturedeploy.onrender.com/file/test.mp4')
             .then(() => {
 
               const a = document.createElement('a');
-              a.href = 'http://localhost:8080/file/test.mp4';
+              a.href = 'https://capturedeploy.onrender.com/file/test.mp4';
               a.download = 'Ultimate-Booth-Candidate.mp4';
               document.body.appendChild(a);
               // const mediaStream = navigator.mediaDevices.getUserMedia({ video: true,audio:true });
