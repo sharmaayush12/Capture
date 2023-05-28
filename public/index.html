@@ -314,7 +314,7 @@
 
     function APICAll(file) {
       // console.log(file)
-      var apiUrl = 'http://localhost:8080/upload';
+      var apiUrl = 'https://capturedeploy.onrender.com/upload';
       const formData = new FormData()
       formData.append('file', file)
 
@@ -336,19 +336,6 @@
               a.click();
               document.body.removeChild(a);
             })
-
-          // const blob = new Blob([result]);
-          // const url = URL.createObjectURL(blob);
-          // const url = URL.createObjectURL(
-          //   new Blob([result]),
-          // );
-          // const mediaStream = navigator.mediaDevices.getUserMedia({ video: true,audio:true });
-          //   const a = document.createElement('iframe');
-          //   a.setAttribute('src',url)
-          //   a.download = 'Ultimate-Booth-Candidate.mp4';
-          // document.body.appendChild(a);
-          // a.click();
-          // document.body.removeChild(a);
           console.log(result)
         })
         .catch(error => console.log('error', error));
