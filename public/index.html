@@ -307,9 +307,9 @@
 
 
 
-    function APICAll(file) {
+function APICAll(file) {
       // console.log(file)
-      var apiUrl = 'http://localhost:8080/upload';
+      var apiUrl = 'https://capture-sigma.vercel.app/upload';
       const formData = new FormData()
       formData.append('file', file)
 
@@ -320,7 +320,7 @@
       })
         .then(response => response.text())
         .then(result => {
-          fetch('http://localhost:8080/file/test.mp4')
+          fetch('https://capture-sigma.vercel.app/file/test.mp4')
             .then(() => {
 
               const a = document.createElement('a');
